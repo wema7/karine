@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="pt-BR"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vinda / Welcome!</title> <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+
+    <style>
+        /* Importa fontes do Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Lato:wght@300;400&display=swap');
+
+        /* Reset básico e Estilos Globais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fce3ec 0%, #f8d5e5 100%);
+            color: #444;
+            padding: 20px;
+            transition: background 0.5s ease;
+        }
+
+        /* Estilo base para os containers (Seleção de Idioma, Quiz e Cartão Principal) */
+        .container-base {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            position: relative;
+            min-height: 280px;
+        }
+
+        /* Esconder elementos */
+        .hidden {
+            display: none !important; /* Use important para garantir override */
+            opacity: 0;
+             visibility: hidden;
+        }
+
+        /* Mostrar elementos (pode precisar ser mais específico que só block) */
+        .visible {
+            display: block; /* Ou flex/grid dependendo do container */
+            opacity: 1;
+            transform: translateY(0);
+             visibility: visible;
+        }
+
+
+        /* --- Estilos da Seleção de Idioma --- */
+         #language-selection {
+             min-height: auto; /* Altura automática */
+         }
+        .lang-question {
+            font-size: 1.4em;
+            color: #333;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        .lang-options {
+             display: flex;
+             justify-content: center;
+             gap: 25px;
+             flex-wrap: wrap;
+        }
+         .lang-options button {
+             font-family: 'Lato', sans-serif;
+             font-size: 1.2em;
+             padding: 12px 30px;
+             border: 2px solid #c84a7d;
+             background-color: #fff;
+             color: #c84a7d;
+             border-radius: 8px;
+             cursor: pointer;
+             transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+             font-weight: 400;
+         }
+          .lang-options button:hover {
+             background-color: #c84a7d;
+             color: #fff;
+             transform: translateY(-2px);
+         }
+
+
+        /* --- Estilos do Quiz --- */
+         .quiz-section .quiz-main-title {
+            font-family: 'Dancing Script', cursive;
+            color: #c84a7d;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            font-weight: 700;
+         }
+         .quiz-section .question-number {
+             font-size: 1.1em;
+             font-weight: bold;
+             color: #555;
+             margin-bottom: 10px;
+             text-transform: uppercase;
+             letter-spacing: 1px;
+         }
+        .quiz-section .question {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 25px;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+        .quiz-section .options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+             position: relative;
+             z-index: 1;
+        }
+        .quiz-section .options button {
+            font-family: 'Lato', sans-serif;
+            font-size: 1.1em;
+            padding: 12px 25px;
+            border: 2px solid #c84a7d;
+            background-color: #fff;
+            color: #c84a7d;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            font-weight: 400;
+        }
+        .quiz-section .options button:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        .quiz-section .options button:hover:not(:disabled) {
+            background-color: #c84a7d;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        .quiz-section .options button:active:not(:disabled) {
+            transform: translateY(0px);
+        }
+
+        /* Mensagem de Feedback (Estilo Overlay) */
+        .feedback-message {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(255, 255, 255, 0.97);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-size: 1.2em;
+            color: #c84a7d;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 15px;
+            z-index: 5;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .feedback-message.visible {
+             opacity: 1;
+             visibility: visible;
+        }
+
+
+        /* --- Estilos do Cartão Principal --- */
+        #main-content {
+             max-width: 700px;
+             text-align: left;
+        }
+        #main-content .title {
+            font-family: 'Dancing Script', cursive;
+            color: #c84a7d;
+            font-size: 2.8em;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        #main-content .message-container {
+            min-height: 200px;
+            position: relative;
+        }
+        #main-content #message {
+            font-size: 1.15em;
+            line-height: 1.7;
+            color: #555;
+            font-weight: 300;
+            white-space: pre-wrap;
+        }
+        #main-content .cursor {
+            display: inline-block;
+            font-weight: bold;
+            color: #c84a7d;
+            opacity: 1;
+            animation: blink 0.8s infinite;
+            margin-left: 1px;
+            transition: opacity 0.1s;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        #main-content .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5em;
+            color: #888;
+            text-align: right;
+            margin-top: 30px;
+            font-weight: 400;
+        }
+
+        /* --- Estilos do Player de Áudio --- */
+        .audio-player-container {
+            margin-top: 40px; padding-top: 20px;
+            border-top: 1px solid #eee; text-align: center;
+        }
+        .audio-prompt {
+            font-size: 1em; color: #666; margin-bottom: 15px;
+        }
+        audio[controls] {
+            width: 100%; max-width: 450px;
+            display: block; margin: 0 auto;
+        }
+
+        /* Ajustes para telas menores */
+        @media (max-width: 600px) {
+            .container-base { padding: 25px 20px; min-height: 300px; }
+            #main-content { padding: 30px 25px; }
+            .lang-question { font-size: 1.2em; }
+            .lang-options button { font-size: 1.1em; padding: 10px 25px; }
+            .quiz-section .quiz-main-title { font-size: 1.9em; margin-bottom: 10px;}
+            .quiz-section .question-number { font-size: 1em; margin-bottom: 8px;}
+            .quiz-section .question { font-size: 1.1em; }
+            .quiz-section .options button { font-size: 1em; padding: 10px 20px; }
+            .feedback-message { font-size: 1.1em; }
+            #main-content .title { font-size: 2.2em; margin-bottom: 20px; }
+            #main-content #message { font-size: 1em; line-height: 1.6; }
+            #main-content .signature { font-size: 1.3em; margin-top: 20px; }
+            .audio-player-container { margin-top: 30px; padding-top: 15px; }
+            .audio-prompt { font-size: 0.95em; margin-bottom: 10px; }
+            audio[controls] { max-width: 100%; }
+        }
+    </style>
+
+</head>
+<body>
+
+    <div id="language-selection" class="container-base visible">
+        <p class="lang-question">Escolha o idioma / Choose your language:</p>
+        <div class="lang-options">
+            <button data-lang="pt">Português</button>
+            <button data-lang="en">English</button>
+        </div>
+    </div>
+
+    <div id="quiz-1" class="quiz-section container-base hidden">
+        <h2 class="quiz-main-title" data-translate="quizMainTitle"></h2>
+        <h3 class="question-number" data-translate="q1Title"></h3>
+        <p class="question" data-translate="q1Question"></p>
+        <div class="options">
+             <button data-answer="hamilton" data-translate="hamilton">Hamilton</button>
+            <button data-answer="verstappen" data-translate="verstappen">Verstappen</button>
+        </div>
+        <div id="feedback-1" class="feedback-message hidden"></div>
+    </div>
+
+    <div id="quiz-2" class="quiz-section container-base hidden">
+         <h2 class="quiz-main-title" data-translate="quizMainTitle"></h2>
+         <h3 class="question-number" data-translate="q2Title"></h3>
+        <p class="question" data-translate="q2Question"></p>
+        <div class="options">
+            <button data-answer="hamilton" data-translate="hamilton">Hamilton</button>
+            <button data-answer="verstappen" data-translate="verstappen">Verstappen</button>
+        </div>
+        <div id="feedback-2" class="feedback-message hidden"></div>
+    </div>
+
+    <div id="main-content" class="container-base hidden">
+        <h1 class="title" data-translate="mainTitle"></h1>
+        <div class="message-container">
+            <p id="message"></p> <span class="cursor">|</span>
+        </div>
+        <p class="signature" data-translate="signature"></p>
+
+        <div class="audio-player-container">
+            <p class="audio-prompt" data-translate="audioPrompt"></p>
+            <audio controls id="audio-player">
+                <source src="god.mp3" type="audio/mpeg">
+                 <span data-translate="audioFallback"></span> </audio>
+        </div>
+        </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Armazenamento de Textos ---
+            const translations = {
+                pt: {
+                    // Geral
+                    langCode: "pt-BR",
+                    pageTitleQuiz: "Um Desafio para Karine...",
+                    pageTitleMain: "Feliz Aniversário, Karine!",
+                    // Seleção Idioma (não precisa traduzir a si mesmo)
+                    // Quiz
+                    quizMainTitle: "Um Pequeno Desafio...",
+                    q1Title: "Pergunta 1",
+                    q1Question: "Quem é melhor, Hamilton ou Verstappen?",
+                    q2Title: "Pergunta 2",
+                    q2Question: "Nova tentativa, Hamilton ou Verstappen?",
+                    hamilton: "Hamilton",
+                    verstappen: "Verstappen",
+                    q1Wrong: "Tá virando a casaca, é? Vou deixar tentar de novo",
+                    q1Correct: "Impressionante como ela não sabe nada de formula 1 até hoje",
+                    q2Wrong: "Nem um pouco fiel, que vergonha!",
+                    q2Correct: "É, ela não tem jeito.",
+                    // Conteúdo Principal
+                    mainTitle: "Para Karine...",
+                    mainMessage: `Minha querida Karininha,\n\nMais uma volta completa do sol, e aqui estamos nós, celebrando o dia em que você chegou para iluminar o mundo. Se no ano passado meu desejo era sua recuperação, hoje meu coração transborda de alegria ao vê-la radiante, como uma flor que desabrochou plenamente após a chuva. A tradição do recadinho anual permanece, mas a admiração, essa só se aprofunda.\n\nLembra que falei do meu encanto fácil? Pois bem, ele continua sendo minha bússola particular, sempre apontando para você. Cada gesto seu, cada sorriso, é como um verso inesperado que me pega de surpresa e torna o poema da vida mais bonito. Você tem essa capacidade rara de transformar o ordinário em extraordinário, simplesmente por ser quem você é.\n\nComo canta o poeta, talvez sem saber que falava de você: "És brilho raro, estrela acesa, / Que em noite escura me atravessa." E essa luz que você emana é o que me faz querer estar perto, compartilhando não só momentos, mas a construção de um futuro, lado a lado, como quem planta um jardim a dois, esperando pacientemente por cada flor.\n\nKarine, para este novo ciclo que se inicia, desejo que você continue voando alto, como um pássaro livre que conhece a imensidão do céu. Que seus sonhos mais audaciosos ganhem forma e cor, e que a felicidade seja a melodia constante dos seus dias. Você não só vale a pena amar, você inspira o amor em sua forma mais genuína.\n\nReceba todo o meu carinho, minha admiração renovada e um amor que cresce com o tempo, como vinho bom.\n\nMeus parabéns, meu amor. Feliz aniversário!`,
+                    signature: "- Com todo meu amor",
+                    audioPrompt: "Vai uma musiquinha?",
+                    audioFallback: "Seu navegador não suporta o elemento de áudio."
+                },
+                en: {
+                     // Geral
+                    langCode: "en",
+                    pageTitleQuiz: "A Challenge for Karine...",
+                    pageTitleMain: "Happy Birthday, Karine!",
+                    // Seleção Idioma (não precisa traduzir a si mesmo)
+                    // Quiz
+                    quizMainTitle: "A Little Challenge...",
+                    q1Title: "Question 1",
+                    q1Question: "Who is better, Hamilton or Verstappen?",
+                    q2Title: "Question 2",
+                    q2Question: "New attempt, Hamilton or Verstappen?",
+                    hamilton: "Hamilton",
+                    verstappen: "Verstappen",
+                    q1Wrong: "Switching sides, huh? I'll let you try again",
+                    q1Correct: "Impressive how she still knows nothing about Formula 1",
+                    q2Wrong: "Not loyal at all, shame on you!",
+                    q2Correct: "Yeah, she's hopeless.",
+                    // Conteúdo Principal
+                    mainTitle: "For Karine...",
+                    mainMessage: `My dearest Karininha,\n\nAnother full turn of the sun, and here we are, celebrating the day you arrived to brighten the world. If last year my wish was for your recovery, today my heart overflows with joy seeing you radiant, like a flower that bloomed fully after the rain. The tradition of the annual note remains, but the admiration, that only deepens.\n\nRemember I mentioned my easy enchantment? Well, it continues to be my private compass, always pointing towards you. Every gesture of yours, every smile, is like an unexpected verse that catches me by surprise and makes the poem of life more beautiful. You have this rare ability to transform the ordinary into extraordinary, simply by being who you are.\n\nAs the poet sings, perhaps without knowing he spoke of you: "You are rare brightness, a lit star, / That crosses me in the dark night afar." And this light that you emanate is what makes me want to be near, sharing not just moments, but the construction of a future, side by side, like someone planting a garden for two, patiently waiting for each flower.\n\nKarine, for this new cycle that begins, I wish that you continue flying high, like a free bird that knows the immensity of the sky. May your boldest dreams take shape and color, and may happiness be the constant melody of your days. You are not only worth loving, you inspire love in its most genuine form.\n\nReceive all my affection, my renewed admiration, and a love that grows with time, like fine wine.\n\nCongratulations, my love. Happy birthday!`,
+                    signature: "- With all my love",
+                    audioPrompt: "How about some music?",
+                    audioFallback: "Your browser does not support the audio element."
+                }
+            };
+
+            let currentLanguage = 'pt'; // Padrão
+            let fullText = ''; // Texto para digitação será definido após escolha do idioma
+
+            // --- Elementos Globais ---
+            const langSelectionDiv = document.getElementById('language-selection');
+            const langButtons = langSelectionDiv.querySelectorAll('.lang-options button');
+            const quiz1 = document.getElementById('quiz-1');
+            const quiz2 = document.getElementById('quiz-2');
+            const mainContent = document.getElementById('main-content');
+            const feedback1 = document.getElementById('feedback-1');
+            const feedback2 = document.getElementById('feedback-2');
+            const quiz1Buttons = quiz1.querySelectorAll('.options button');
+            const quiz2Buttons = quiz2.querySelectorAll('.options button');
+            const messageElement = document.getElementById('message');
+            const cursorElement = mainContent.querySelector('.cursor');
+
+            // Duração padrão do feedback (em milissegundos)
+            const CORRECT_FEEDBACK_DURATION = 2500;
+            const WRONG_FEEDBACK_DURATION = 4000;
+
+            // --- Função para Atualizar Textos ---
+            function updateTexts(lang) {
+                currentLanguage = lang;
+                const texts = translations[lang];
+
+                // Atualiza o atributo lang da tag html
+                document.documentElement.lang = texts.langCode;
+
+                // Define título inicial da página (Quiz)
+                 document.title = texts.pageTitleQuiz;
+
+                // Seleciona todos os elementos com 'data-translate'
+                document.querySelectorAll('[data-translate]').forEach(el => {
+                    const key = el.getAttribute('data-translate');
+                    if (texts[key]) {
+                        // Usa innerText para evitar problemas com HTML injection
+                        // e lida bem com texto simples (não para HTML complexo)
+                        el.innerText = texts[key];
+                    }
+                });
+
+                 // Define o texto principal para a animação de digitação
+                 fullText = texts.mainMessage;
+            }
+
+            // --- Lógica da Seleção de Idioma ---
+            langButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const selectedLang = button.getAttribute('data-lang');
+                    updateTexts(selectedLang); // Atualiza todos os textos
+
+                    // Esconde seleção de idioma e mostra Quiz 1
+                    langSelectionDiv.classList.add('hidden');
+                    langSelectionDiv.classList.remove('visible'); // Garante remoção da classe visível
+
+                    quiz1.classList.remove('hidden');
+                    quiz1.classList.add('visible');
+                });
+            });
+
+
+            // --- Lógica do Feedback (Adaptada para usar traduções) ---
+            function showFeedback(feedbackElement, messageKey, duration) {
+                // Busca a mensagem traduzida
+                const message = translations[currentLanguage][messageKey] || "Feedback message missing";
+                feedbackElement.innerText = message;
+                feedbackElement.classList.remove('hidden');
+                feedbackElement.classList.add('visible');
+
+                const parentQuiz = feedbackElement.closest('.quiz-section');
+                const buttons = parentQuiz.querySelectorAll('.options button');
+                buttons.forEach(btn => btn.disabled = true);
+
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        feedbackElement.classList.remove('visible');
+                        feedbackElement.classList.add('hidden');
+                        buttons.forEach(btn => btn.disabled = false);
+                        setTimeout(resolve, 400);
+                    }, duration);
+                });
+            }
+
+            // --- Lógica do Quiz 1 (Adaptada) ---
+            quiz1Buttons.forEach(button => {
+                button.addEventListener('click', async () => {
+                    const answer = button.getAttribute('data-answer');
+                    if (answer === 'verstappen') {
+                        // Passa a CHAVE da tradução para showFeedback
+                        await showFeedback(feedback1, 'q1Wrong', WRONG_FEEDBACK_DURATION);
+                    } else if (answer === 'hamilton') {
+                        await showFeedback(feedback1, 'q1Correct', CORRECT_FEEDBACK_DURATION);
+                        setTimeout(() => {
+                            quiz1.classList.remove('visible');
+                            quiz1.classList.add('hidden');
+                            quiz2.classList.remove('hidden');
+                            quiz2.classList.add('visible');
+                        }, 100);
+                    }
+                });
+            });
+
+            // --- Lógica do Quiz 2 (Adaptada) ---
+            quiz2Buttons.forEach(button => {
+                button.addEventListener('click', async () => {
+                    const answer = button.getAttribute('data-answer');
+                    if (answer === 'verstappen') {
+                        await showFeedback(feedback2, 'q2Wrong', WRONG_FEEDBACK_DURATION);
+                    } else if (answer === 'hamilton') {
+                        await showFeedback(feedback2, 'q2Correct', CORRECT_FEEDBACK_DURATION);
+                         setTimeout(() => {
+                            quiz2.classList.remove('visible');
+                            quiz2.classList.add('hidden');
+
+                            // Define título final da página usando tradução
+                            document.title = translations[currentLanguage].pageTitleMain;
+
+                            mainContent.classList.remove('hidden');
+                            mainContent.classList.add('visible');
+
+                            startTypingAnimation(); // Inicia digitação com o texto já definido
+                        }, 100);
+                    }
+                });
+            });
+
+
+            // --- Lógica da Digitação (Texto principal agora vem de 'fullText') ---
+            let charIndex = 0;
+            const typingSpeed = 60;
+
+            function typeWriter() {
+                 // Usa a variável 'fullText' que foi definida em updateTexts
+                if (fullText && charIndex < fullText.length) {
+                    // Usa innerText para renderizar corretamente as quebras de linha (\n)
+                    messageElement.innerText = fullText.substring(0, charIndex + 1);
+                    charIndex++;
+                    setTimeout(typeWriter, typingSpeed);
+                } else {
+                     cursorElement.style.display = 'inline-block';
+                }
+            }
+
+            function startTypingAnimation() {
+                 charIndex = 0; // Reseta o índice caso seja chamado novamente
+                 cursorElement.style.display = 'inline-block';
+                 messageElement.innerText = ''; // Limpa antes de começar
+                 setTimeout(typeWriter, 700);
+            }
+
+        }); // Fim do DOMContentLoaded
+    </script>
+</body>
+</html>
