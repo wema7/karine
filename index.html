@@ -9,8 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Great+Vibes&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 
     <style>
-        /* Estilos CSS (sem alterações nesta etapa) */
+        /* Importa fontes do Google Fonts */
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Great+Vibes&family=Lato:wght@300;400&display=swap');
+
+        /* Reset básico e Estilos Globais */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { font-size: 17px; }
         html, body { height: 100%; }
@@ -162,9 +164,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // --- Armazenamento de Textos (sem alterações) ---
+            // --- Armazenamento de Textos ---
             const translations = {
-                pt: { /* ... textos em português ... */
+                 pt: { /* ... textos pt ... */
                     langCode: "pt-BR", pageTitleQuiz: "Um Desafio para Karine...", pageTitleMain: "Feliz Aniversário, Karine!",
                     quizMainTitle: "Um Pequeno Desafio...", q1Title: "Pergunta 1", q1Question: "Quem é melhor, Hamilton ou Verstappen?",
                     q2Title: "Pergunta 2", q2Question: "Nova tentativa, Hamilton ou Verstappen?", hamilton: "Hamilton", verstappen: "Verstappen",
@@ -174,9 +176,9 @@
                     mainMessage: `Minha querida Karininha,\n\nMais uma volta completa do sol, e aqui estamos nós, celebrando o dia em que você chegou para iluminar o mundo. Se no ano passado meu desejo era sua recuperação, hoje meu coração transborda de alegria ao vê-la radiante, como uma flor que desabrochou plenamente após a chuva. A tradição do recadinho anual permanece, mas a admiração, essa só se aprofunda.\n\nLembra que falei do meu encanto fácil? Pois bem, ele continua sendo minha bússola particular, sempre apontando para você. Cada gesto seu, cada sorriso, é como um verso inesperado que me pega de surpresa e torna o poema da vida mais bonito. Você tem essa capacidade rara de transformar o ordinário em extraordinário, simplesmente por ser quem você é.\n\nComo canta o poeta, talvez sem saber que falava de você: "És brilho raro, estrela acesa, / Que em noite escura me atravessa." E essa luz que você emana é o que me faz querer estar perto, compartilhando não só momentos, mas a construção de um futuro, lado a lado, como quem planta um jardim a dois, esperando pacientemente por cada flor.\n\nKarine, para este novo ciclo que se inicia, desejo que você continue voando alto, como um pássaro livre que conhece a imensidão do céu. Que seus sonhos mais audaciosos ganhem forma e cor, e que a felicidade seja a melodia constante dos seus dias. Você não só vale a pena amar, você inspira o amor em sua forma mais genuína.\n\nReceba todo o meu carinho, minha admiração renovada e um amor que cresce com o tempo, como vinho bom.\n\nMeus parabéns, meu amor. Feliz aniversário!`,
                     signature: "- Com todo meu amor", audioPrompt: "Vai uma musiquinha?", audioFallback: "Seu navegador não suporta o elemento de áudio.",
                     finalBlessing: "Feliz aniversário, Engenheira Karine! Agradeço muito a Deus por sua vida e peço que Ele continue abençoando e protegendo você ricamente em todos os seus dias."
-                 },
-                en: { /* ... textos em inglês ... */
-                    langCode: "en", pageTitleQuiz: "A Challenge for Karine...", pageTitleMain: "Happy Birthday, Karine!",
+                },
+                en: { /* ... textos en ... */
+                     langCode: "en", pageTitleQuiz: "A Challenge for Karine...", pageTitleMain: "Happy Birthday, Karine!",
                     quizMainTitle: "A Little Challenge...", q1Title: "Question 1", q1Question: "Who is better, Hamilton or Verstappen?",
                     q2Title: "Question 2", q2Question: "New attempt, Hamilton or Verstappen?", hamilton: "Hamilton", verstappen: "Verstappen",
                     q1Wrong: "Switching sides, huh? I'll let you try again", q1Correct: "Impressive how she still knows nothing about Formula 1",
@@ -220,9 +222,7 @@
                     if (texts[key]) { el.innerText = texts[key]; }
                 });
                  fullText = texts.mainMessage;
-                 if(finalBlessingElement && texts.finalBlessing) {
-                    finalBlessingElement.innerText = texts.finalBlessing;
-                 }
+                 if(finalBlessingElement && texts.finalBlessing) { finalBlessingElement.innerText = texts.finalBlessing; }
             }
 
             // --- Lógica da Seleção de Idioma ---
@@ -258,44 +258,32 @@
 
             // --- Função para Enviar Notificação (Formspree) ---
             function sendNotification() {
-                // ####################################################################
-                // ## COLE A SUA URL DO FORMSPREE AQUI DENTRO DAS ASPAS SIMPLES ##
-                // ####################################################################
+                // !! URL DO FORMSPREE INSERIDA AQUI !!
                 const formSpreeEndpoint = 'https://formspree.io/f/xkgrgygo';
-                // ####################################################################
 
-                if (!formSpreeEndpoint || formSpreeEndpoint === 'https://formspree.io/f/xkgrgygo') {
-                    console.warn("Endpoint do Formspree não configurado. Notificação não será enviada.");
-                    return; // Não tenta enviar se a URL não foi alterada
-                }
+                // Não é mais necessário verificar se a URL é placeholder
+                // if (!formSpreeEndpoint || formSpreeEndpoint === 'COLE_SUA_URL_DO_FORMSPREE_AQUI') {
+                //     console.warn("Endpoint do Formspree não configurado. Notificação não será enviada.");
+                //     return;
+                // }
 
                 const notificationData = {
                     subject: 'Site Karine Aniversário: Quiz Acertado!',
                     message: `Alguém acertou a primeira pergunta (Hamilton) em ${new Date().toLocaleString('pt-BR')} no idioma ${currentLanguage}.`,
-                    _replyto: 'noreply@example.com' // Email fictício
+                    _replyto: 'noreply@example.com'
                 };
 
                 fetch(formSpreeEndpoint, {
                     method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
                     body: JSON.stringify(notificationData)
                 })
                 .then(response => {
-                    if (response.ok) {
-                        console.log('Notificação via Formspree enviada com sucesso.');
-                    } else {
-                        console.error('Erro ao enviar notificação para Formspree.');
-                         // response.json().then(data => console.log('Detalhe do erro:', data)); // Descomente para ver detalhes se houver erro
-                    }
+                    if (response.ok) { console.log('Notificação via Formspree enviada com sucesso.'); }
+                    else { console.error('Erro ao enviar notificação para Formspree.'); }
                 })
-                .catch(error => {
-                    console.error('Erro de rede ao tentar enviar notificação:', error);
-                });
+                .catch(error => { console.error('Erro de rede ao tentar enviar notificação:', error); });
             }
-
 
             // --- Lógica do Quiz 1 ---
             quiz1Buttons.forEach(button => {
@@ -304,13 +292,8 @@
                     if (answer === 'verstappen') {
                         await showFeedback(feedback1, 'q1Wrong', WRONG_FEEDBACK_DURATION);
                     } else if (answer === 'hamilton') {
-                        // Ação Correta Q1
                         await showFeedback(feedback1, 'q1Correct', CORRECT_FEEDBACK_DURATION);
-
-                        // !! CHAMA A FUNÇÃO DE NOTIFICAÇÃO !!
-                        sendNotification();
-
-                        // Continua para Q2
+                        sendNotification(); // Chama a notificação
                         setTimeout(() => {
                             quiz1.classList.remove('visible'); quiz1.classList.add('hidden');
                             quiz2.classList.remove('hidden'); quiz2.classList.add('visible');
