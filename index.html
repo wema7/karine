@@ -9,62 +9,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Great+Vibes&family=Lato:wght@300;400&display=swap" rel="stylesheet">
 
     <style>
-        /* Importa fontes do Google Fonts */
+        /* Estilos CSS (sem alterações) */
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Great+Vibes&family=Lato:wght@300;400&display=swap');
-
-        /* Reset básico e Estilos Globais */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { font-size: 17px; }
         html, body { height: 100%; }
-        body {
-            font-family: 'Lato', sans-serif; display: flex; justify-content: center; align-items: center;
-            min-height: 100vh; background: linear-gradient(135deg, #fce3ec 0%, #f8d5e5 100%);
-            color: #444; padding: 15px; transition: background 0.5s ease;
-        }
-        .container-base {
-            background-color: #ffffff; padding: 30px 35px; border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); max-width: 650px; width: 100%;
-            text-align: center; transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-            position: relative; display: flex; flex-direction: column; max-height: 90vh;
-        }
+        body { font-family: 'Lato', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(135deg, #fce3ec 0%, #f8d5e5 100%); color: #444; padding: 15px; transition: background 0.5s ease; }
+        .container-base { background-color: #ffffff; padding: 30px 35px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); max-width: 650px; width: 100%; text-align: center; transition: opacity 0.5s ease-out, transform 0.5s ease-out; position: relative; display: flex; flex-direction: column; max-height: 90vh; }
         .hidden { display: none !important; opacity: 0; visibility: hidden; }
         .visible { display: flex; opacity: 1; transform: translateY(0); visibility: visible; }
         #language-selection.visible { display: block; }
-
-        /* Seleção de Idioma */
-         #language-selection { min-height: auto; max-height: none; }
+        #language-selection { min-height: auto; max-height: none; }
         .lang-question { font-size: 1.5rem; color: #333; margin-bottom: 30px; line-height: 1.5; }
         .lang-options { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; }
-        .lang-options button {
-             font-family: 'Lato', sans-serif; font-size: 1.3rem; padding: 12px 30px; border: 2px solid #c84a7d;
-             background-color: #fff; color: #c84a7d; border-radius: 8px; cursor: pointer;
-             transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease; font-weight: 400;
-         }
-         .lang-options button:hover { background-color: #c84a7d; color: #fff; transform: translateY(-2px); }
-
-        /* Quiz */
-         .quiz-section { min-height: 280px; max-height: none; }
-         .quiz-section .quiz-main-title { font-family: 'Dancing Script', cursive; color: #c84a7d; font-size: 2.5rem; margin-bottom: 15px; font-weight: 700; }
-         .quiz-section .question-number { font-size: 1.2rem; font-weight: bold; color: #555; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        .lang-options button { font-family: 'Lato', sans-serif; font-size: 1.3rem; padding: 12px 30px; border: 2px solid #c84a7d; background-color: #fff; color: #c84a7d; border-radius: 8px; cursor: pointer; transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease; font-weight: 400; }
+        .lang-options button:hover { background-color: #c84a7d; color: #fff; transform: translateY(-2px); }
+        .quiz-section { min-height: 280px; max-height: none; }
+        .quiz-section .quiz-main-title { font-family: 'Dancing Script', cursive; color: #c84a7d; font-size: 2.5rem; margin-bottom: 15px; font-weight: 700; }
+        .quiz-section .question-number { font-size: 1.2rem; font-weight: bold; color: #555; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
         .quiz-section .question { font-size: 1.4rem; color: #333; margin-bottom: 25px; line-height: 1.5; font-weight: 400; }
         .quiz-section .options { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 20px; position: relative; z-index: 1; }
-        .quiz-section .options button {
-            font-family: 'Lato', sans-serif; font-size: 1.2rem; padding: 12px 25px; border: 2px solid #c84a7d;
-            background-color: #fff; color: #c84a7d; border-radius: 8px; cursor: pointer;
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease; font-weight: 400;
-        }
+        .quiz-section .options button { font-family: 'Lato', sans-serif; font-size: 1.2rem; padding: 12px 25px; border: 2px solid #c84a7d; background-color: #fff; color: #c84a7d; border-radius: 8px; cursor: pointer; transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease; font-weight: 400; }
         .quiz-section .options button:disabled { cursor: not-allowed; opacity: 0.6; }
         .quiz-section .options button:hover:not(:disabled) { background-color: #c84a7d; color: #fff; transform: translateY(-2px); }
         .quiz-section .options button:active:not(:disabled) { transform: translateY(0px); }
-        .feedback-message {
-            position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, 0.97);
-            display: flex; justify-content: center; align-items: center; padding: 20px; font-size: 1.3rem;
-            color: #c84a7d; font-weight: bold; text-align: center; border-radius: 15px; z-index: 5;
-            opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
+        .feedback-message { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, 0.97); display: flex; justify-content: center; align-items: center; padding: 20px; font-size: 1.3rem; color: #c84a7d; font-weight: bold; text-align: center; border-radius: 15px; z-index: 5; opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s ease; }
         .feedback-message.visible { opacity: 1; visibility: visible; }
-
-        /* Cartão Principal */
         #main-content { max-width: 750px; text-align: left; padding: 40px 50px; flex-grow: 1; overflow: hidden; }
         #main-content .title { font-family: 'Dancing Script', cursive; color: #c84a7d; font-size: 3rem; text-align: center; margin-bottom: 30px; font-weight: 700; flex-shrink: 0; }
         #main-content .message-container { max-height: 55vh; overflow-y: auto; padding-right: 15px; flex-grow: 1; scrollbar-width: thin; scrollbar-color: #c84a7d #eee; }
@@ -76,36 +46,14 @@
         #main-content .cursor { display: inline-block; font-weight: bold; color: #c84a7d; opacity: 1; animation: blink 0.8s infinite; margin-left: 1px; transition: opacity 0.1s; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
         #main-content .signature { font-family: 'Dancing Script', cursive; font-size: 1.7rem; color: #888; text-align: right; margin-top: 25px; font-weight: 400; flex-shrink: 0; }
-
-        /* Player Áudio */
         .audio-player-container { margin-top: 25px; padding-top: 15px; border-top: 1px solid #eee; text-align: center; flex-shrink: 0; }
         .audio-prompt { font-size: 1.1rem; color: #666; margin-bottom: 15px; }
         audio[controls] { width: 100%; max-width: 450px; display: block; margin: 0 auto; }
-
-        /* Bênção Final */
         #final-blessing { font-family: 'Great Vibes', cursive; font-size: 1.8rem; color: #b83f73; text-align: center; margin-top: 35px; padding-top: 20px; border-top: 1px dashed #eee; line-height: 1.5; flex-shrink: 0; opacity: 0; }
         #final-blessing.animate-fade-in { animation: fadeInBlessing 2s ease-out forwards; animation-delay: 0.3s; }
         @keyframes fadeInBlessing { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Mobile */
-        @media (max-width: 700px) {
-            body { padding: 5px; }
-            .container-base { padding: 20px 15px; width: 100%; border-radius: 10px; max-height: 95vh; }
-            #main-content { padding: 25px 15px; width: 100%; }
-            .lang-question { font-size: 1.3rem; } .lang-options button { font-size: 1.2rem; padding: 10px 25px;}
-            .quiz-section .quiz-main-title { font-size: 2rem; } .quiz-section .question-number { font-size: 1.1rem; }
-            .quiz-section .question { font-size: 1.25rem; } .quiz-section .options button { font-size: 1.1rem; padding: 10px 20px; }
-            .feedback-message { font-size: 1.2rem; }
-            #main-content .title { font-size: 2.5rem; margin-bottom: 20px;}
-            #main-content #message { font-size: 1.2rem; line-height: 1.65; }
-            #main-content .signature { font-size: 1.5rem; margin-top: 20px;}
-            .audio-player-container { margin-top: 20px; padding-top: 15px; }
-            .audio-prompt { font-size: 1rem; } audio[controls] { max-width: 100%; }
-            #main-content .message-container { max-height: 60vh; padding-right: 10px; }
-            #main-content .message-container::-webkit-scrollbar { width: 6px; }
-            #final-blessing { font-size: 1.5rem; margin-top: 25px; padding-top: 15px; }
-        }
-         @media (max-height: 500px) { #main-content .message-container { max-height: 45vh; } }
+        @media (max-width: 700px) { body { padding: 5px; } .container-base { padding: 20px 15px; width: 100%; border-radius: 10px; max-height: 95vh; } #main-content { padding: 25px 15px; width: 100%; } .lang-question { font-size: 1.3rem; } .lang-options button { font-size: 1.2rem; padding: 10px 25px;} .quiz-section .quiz-main-title { font-size: 2rem; } .quiz-section .question-number { font-size: 1.1rem; } .quiz-section .question { font-size: 1.25rem; } .quiz-section .options button { font-size: 1.1rem; padding: 10px 20px; } .feedback-message { font-size: 1.2rem; } #main-content .title { font-size: 2.5rem; margin-bottom: 20px;} #main-content #message { font-size: 1.2rem; line-height: 1.65; } #main-content .signature { font-size: 1.5rem; margin-top: 20px;} .audio-player-container { margin-top: 20px; padding-top: 15px; } .audio-prompt { font-size: 1rem; } audio[controls] { max-width: 100%; } #main-content .message-container { max-height: 60vh; padding-right: 10px; } #main-content .message-container::-webkit-scrollbar { width: 6px; } #final-blessing { font-size: 1.5rem; margin-top: 25px; padding-top: 15px; } }
+        @media (max-height: 500px) { #main-content .message-container { max-height: 45vh; } }
     </style>
 
 </head>
@@ -148,46 +96,20 @@
             <span class="cursor">|</span>
         </div>
         <p class="signature" data-translate="signature"></p>
-
         <div class="audio-player-container">
             <p class="audio-prompt" data-translate="audioPrompt"></p>
-            <audio controls id="audio-player">
-                <source src="god.mp3" type="audio/mpeg">
-                 <span data-translate="audioFallback"></span>
-            </audio>
+            <audio controls id="audio-player"> <source src="god.mp3" type="audio/mpeg"> <span data-translate="audioFallback"></span> </audio>
         </div>
-
         <p id="final-blessing" class="hidden" data-translate="finalBlessing"></p>
-
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // --- Armazenamento de Textos ---
+            // --- Armazenamento de Textos (sem alterações) ---
             const translations = {
-                 pt: { /* ... textos pt ... */
-                    langCode: "pt-BR", pageTitleQuiz: "Um Desafio para Karine...", pageTitleMain: "Feliz Aniversário, Karine!",
-                    quizMainTitle: "Um Pequeno Desafio...", q1Title: "Pergunta 1", q1Question: "Quem é melhor, Hamilton ou Verstappen?",
-                    q2Title: "Pergunta 2", q2Question: "Nova tentativa, Hamilton ou Verstappen?", hamilton: "Hamilton", verstappen: "Verstappen",
-                    q1Wrong: "Tá virando a casaca, é? Vou deixar tentar de novo", q1Correct: "Impressionante como ela não sabe nada de formula 1 até hoje",
-                    q2Wrong: "Nem um pouco fiel, que vergonha!", q2Correct: "É, ela não tem jeito.",
-                    mainTitle: "Para Karine...",
-                    mainMessage: `Minha querida Karininha,\n\nMais uma volta completa do sol, e aqui estamos nós, celebrando o dia em que você chegou para iluminar o mundo. Se no ano passado meu desejo era sua recuperação, hoje meu coração transborda de alegria ao vê-la radiante, como uma flor que desabrochou plenamente após a chuva. A tradição do recadinho anual permanece, mas a admiração, essa só se aprofunda.\n\nLembra que falei do meu encanto fácil? Pois bem, ele continua sendo minha bússola particular, sempre apontando para você. Cada gesto seu, cada sorriso, é como um verso inesperado que me pega de surpresa e torna o poema da vida mais bonito. Você tem essa capacidade rara de transformar o ordinário em extraordinário, simplesmente por ser quem você é.\n\nComo canta o poeta, talvez sem saber que falava de você: "És brilho raro, estrela acesa, / Que em noite escura me atravessa." E essa luz que você emana é o que me faz querer estar perto, compartilhando não só momentos, mas a construção de um futuro, lado a lado, como quem planta um jardim a dois, esperando pacientemente por cada flor.\n\nKarine, para este novo ciclo que se inicia, desejo que você continue voando alto, como um pássaro livre que conhece a imensidão do céu. Que seus sonhos mais audaciosos ganhem forma e cor, e que a felicidade seja a melodia constante dos seus dias. Você não só vale a pena amar, você inspira o amor em sua forma mais genuína.\n\nReceba todo o meu carinho, minha admiração renovada e um amor que cresce com o tempo, como vinho bom.\n\nMeus parabéns, meu amor. Feliz aniversário!`,
-                    signature: "- Com todo meu amor", audioPrompt: "Vai uma musiquinha?", audioFallback: "Seu navegador não suporta o elemento de áudio.",
-                    finalBlessing: "Feliz aniversário, Engenheira Karine! Agradeço muito a Deus por sua vida e peço que Ele continue abençoando e protegendo você ricamente em todos os seus dias."
-                },
-                en: { /* ... textos en ... */
-                     langCode: "en", pageTitleQuiz: "A Challenge for Karine...", pageTitleMain: "Happy Birthday, Karine!",
-                    quizMainTitle: "A Little Challenge...", q1Title: "Question 1", q1Question: "Who is better, Hamilton or Verstappen?",
-                    q2Title: "Question 2", q2Question: "New attempt, Hamilton or Verstappen?", hamilton: "Hamilton", verstappen: "Verstappen",
-                    q1Wrong: "Switching sides, huh? I'll let you try again", q1Correct: "Impressive how she still knows nothing about Formula 1",
-                    q2Wrong: "Not loyal at all, shame on you!", q2Correct: "Yeah, she's hopeless.",
-                    mainTitle: "For Karine...",
-                    mainMessage: `My dearest Karininha,\n\nAnother full turn of the sun, and here we are, celebrating the day you arrived to brighten the world. If last year my wish was for your recovery, today my heart overflows with joy seeing you radiant, like a flower that bloomed fully after the rain. The tradition of the annual note remains, but the admiration, that only deepens.\n\nRemember I mentioned my easy enchantment? Well, it continues to be my private compass, always pointing towards you. Every gesture of yours, every smile, is like an unexpected verse that catches me by surprise and makes the poem of life more beautiful. You have this rare ability to transform the ordinary into extraordinary, simply by being who you are.\n\nAs the poet sings, perhaps without knowing he spoke of you: "You are rare brightness, a lit star, / That crosses me in the dark night afar." And this light that you emanate is what makes me want to be near, sharing not just moments, but the construction of a future, side by side, like someone planting a garden for two, patiently waiting for each flower.\n\nKarine, for this new cycle that begins, I wish that you continue flying high, like a free bird that knows the immensity of the sky. May your boldest dreams take shape and color, and may happiness be the constant melody of your days. You are not only worth loving, you inspire love in its most genuine form.\n\nReceive all my affection, my renewed admiration, and a love that grows with time, like fine wine.\n\nCongratulations, my love. Happy birthday!`,
-                    signature: "- With all my love", audioPrompt: "How about some music?", audioFallback: "Your browser does not support the audio element.",
-                    finalBlessing: "Happy birthday, Engineer Karine! I thank God very much for your life and ask Him to continue blessing and protecting you richly all your days."
-                 }
+                pt: { langCode: "pt-BR", pageTitleQuiz: "Um Desafio para Karine...", pageTitleMain: "Feliz Aniversário, Karine!", quizMainTitle: "Um Pequeno Desafio...", q1Title: "Pergunta 1", q1Question: "Quem é melhor, Hamilton ou Verstappen?", q2Title: "Pergunta 2", q2Question: "Nova tentativa, Hamilton ou Verstappen?", hamilton: "Hamilton", verstappen: "Verstappen", q1Wrong: "Tá virando a casaca, é? Vou deixar tentar de novo", q1Correct: "Impressionante como ela não sabe nada de formula 1 até hoje", q2Wrong: "Nem um pouco fiel, que vergonha!", q2Correct: "É, ela não tem jeito.", mainTitle: "Para Karine...", mainMessage: `Minha querida Karininha,\n\nMais uma volta completa do sol, e aqui estamos nós, celebrando o dia em que você chegou para iluminar o mundo. Se no ano passado meu desejo era sua recuperação, hoje meu coração transborda de alegria ao vê-la radiante, como uma flor que desabrochou plenamente após a chuva. A tradição do recadinho anual permanece, mas a admiração, essa só se aprofunda.\n\nLembra que falei do meu encanto fácil? Pois bem, ele continua sendo minha bússola particular, sempre apontando para você. Cada gesto seu, cada sorriso, é como um verso inesperado que me pega de surpresa e torna o poema da vida mais bonito. Você tem essa capacidade rara de transformar o ordinário em extraordinário, simplesmente por ser quem você é.\n\nComo canta o poeta, talvez sem saber que falava de você: "És brilho raro, estrela acesa, / Que em noite escura me atravessa." E essa luz que você emana é o que me faz querer estar perto, compartilhando não só momentos, mas a construção de um futuro, lado a lado, como quem planta um jardim a dois, esperando pacientemente por cada flor.\n\nKarine, para este novo ciclo que se inicia, desejo que você continue voando alto, como um pássaro livre que conhece a imensidão do céu. Que seus sonhos mais audaciosos ganhem forma e cor, e que a felicidade seja a melodia constante dos seus dias. Você não só vale a pena amar, você inspira o amor em sua forma mais genuína.\n\nReceba todo o meu carinho, minha admiração renovada e um amor que cresce com o tempo, como vinho bom.\n\nMeus parabéns, meu amor. Feliz aniversário!`, signature: "- Com todo meu amor", audioPrompt: "Vai uma musiquinha?", audioFallback: "Seu navegador não suporta o elemento de áudio.", finalBlessing: "Feliz aniversário, Engenheira Karine! Agradeço muito a Deus por sua vida e peço que Ele continue abençoando e protegendo você ricamente em todos os seus dias." },
+                en: { langCode: "en", pageTitleQuiz: "A Challenge for Karine...", pageTitleMain: "Happy Birthday, Karine!", quizMainTitle: "A Little Challenge...", q1Title: "Question 1", q1Question: "Who is better, Hamilton or Verstappen?", q2Title: "Question 2", q2Question: "New attempt, Hamilton or Verstappen?", hamilton: "Hamilton", verstappen: "Verstappen", q1Wrong: "Switching sides, huh? I'll let you try again", q1Correct: "Impressive how she still knows nothing about Formula 1", q2Wrong: "Not loyal at all, shame on you!", q2Correct: "Yeah, she's hopeless.", mainTitle: "For Karine...", mainMessage: `My dearest Karininha,\n\nAnother full turn of the sun, and here we are, celebrating the day you arrived to brighten the world. If last year my wish was for your recovery, today my heart overflows with joy seeing you radiant, like a flower that bloomed fully after the rain. The tradition of the annual note remains, but the admiration, that only deepens.\n\nRemember I mentioned my easy enchantment? Well, it continues to be my private compass, always pointing towards you. Every gesture of yours, every smile, is like an unexpected verse that catches me by surprise and makes the poem of life more beautiful. You have this rare ability to transform the ordinary into extraordinary, simply by being who you are.\n\nAs the poet sings, perhaps without knowing he spoke of you: "You are rare brightness, a lit star, / That crosses me in the dark night afar." And this light that you emanate is what makes me want to be near, sharing not just moments, but the construction of a future, side by side, like someone planting a garden for two, patiently waiting for each flower.\n\nKarine, for this new cycle that begins, I wish that you continue flying high, like a free bird that knows the immensity of the sky. May your boldest dreams take shape and color, and may happiness be the constant melody of your days. You are not only worth loving, you inspire love in its most genuine form.\n\nReceive all my affection, my renewed admiration, and a love that grows with time, like fine wine.\n\nCongratulations, my love. Happy birthday!`, signature: "- With all my love", audioPrompt: "How about some music?", audioFallback: "Your browser does not support the audio element.", finalBlessing: "Happy birthday, Engineer Karine! I thank God very much for your life and ask Him to continue blessing and protecting you richly all your days." }
             };
 
             let currentLanguage = 'pt';
@@ -258,18 +180,13 @@
 
             // --- Função para Enviar Notificação (Formspree) ---
             function sendNotification() {
-                // !! URL DO FORMSPREE INSERIDA AQUI !!
-                const formSpreeEndpoint = 'https://formspree.io/f/xkgrgygo';
+                const formSpreeEndpoint = 'https://formspree.io/f/xkgrgygo'; // URL JÁ INSERIDA
 
-                // Não é mais necessário verificar se a URL é placeholder
-                // if (!formSpreeEndpoint || formSpreeEndpoint === 'COLE_SUA_URL_DO_FORMSPREE_AQUI') {
-                //     console.warn("Endpoint do Formspree não configurado. Notificação não será enviada.");
-                //     return;
-                // }
-
+                // Mensagem de notificação ligeiramente ajustada
                 const notificationData = {
-                    subject: 'Site Karine Aniversário: Quiz Acertado!',
-                    message: `Alguém acertou a primeira pergunta (Hamilton) em ${new Date().toLocaleString('pt-BR')} no idioma ${currentLanguage}.`,
+                    subject: 'Site Karine Aniversário: Quiz Q1 OK!', // Assunto mais curto
+                    // Usando o código de localidade para consistência da data/hora
+                    message: `Quiz Q1 Correct (Hamilton) at ${new Date().toLocaleString(translations[currentLanguage].langCode)} in language: ${currentLanguage}.`,
                     _replyto: 'noreply@example.com'
                 };
 
@@ -280,10 +197,11 @@
                 })
                 .then(response => {
                     if (response.ok) { console.log('Notificação via Formspree enviada com sucesso.'); }
-                    else { console.error('Erro ao enviar notificação para Formspree.'); }
+                    else { console.error('Erro ao enviar notificação para Formspree. Status:', response.status); }
                 })
                 .catch(error => { console.error('Erro de rede ao tentar enviar notificação:', error); });
             }
+
 
             // --- Lógica do Quiz 1 ---
             quiz1Buttons.forEach(button => {
@@ -292,12 +210,15 @@
                     if (answer === 'verstappen') {
                         await showFeedback(feedback1, 'q1Wrong', WRONG_FEEDBACK_DURATION);
                     } else if (answer === 'hamilton') {
+                        // Mostra feedback primeiro
                         await showFeedback(feedback1, 'q1Correct', CORRECT_FEEDBACK_DURATION);
-                        sendNotification(); // Chama a notificação
+                        // TENTA enviar notificação (não espera a resposta para continuar)
+                        sendNotification();
+                        // Continua para Q2 após um pequeno delay
                         setTimeout(() => {
                             quiz1.classList.remove('visible'); quiz1.classList.add('hidden');
                             quiz2.classList.remove('hidden'); quiz2.classList.add('visible');
-                        }, 100);
+                        }, 100); // Delay curto para transição
                     }
                 });
             });
